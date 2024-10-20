@@ -16,22 +16,19 @@ html(lang="en")
       nav
         ul
           if user && user.firstName
-            //- After login: Show profile picture and logout link
-            
-            li
-              a(href="/home") Home
-            
-            li
-              a(href="/logout") Logout
-            li
-              img(src="/assects/img/profile-removebg-preview.png", alt="Profile Picture", class="profile-pic")
-              span.welcome-message Welcome, #{user.firstName}!  
-          else
-            //- Before login: Default navigation links
             li
               a(href="/") Home
             li
-              a(href="/about") About Us
+              a(href="/logout") Logout
+            li
+              // Self-closing image tag with correct syntax
+              img(src=user.profilePicture || "/img/default-profile.png", alt="Profile Picture", class="profile-pic", onclick="openProfileEditModal()")
+              span.welcome-message Welcome, #{user.firstName}!
+          else
+            li
+              a(href="/") Home
+            li
+              a(href="/aboutus") About Us
             li
               a(href="/login") Login
             li

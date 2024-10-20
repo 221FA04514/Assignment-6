@@ -81,3 +81,82 @@ toggleButton.addEventListener('click', () => {
     updateToggleButton();
 });
 
+// public/js/modal.js
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById('profileEditModal');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const closeBtn = document.getElementById('closeModal');
+  
+    // When the user clicks the button, open the modal
+    editProfileBtn.onclick = function() {
+      modal.style.display = "block";
+    }
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  
+    // When the user clicks on close button, close the modal
+    if (closeBtn) {
+      closeBtn.onclick = function() {
+        modal.style.display = "none";
+      }
+    }
+  });
+
+  // Show overlay when profile pic is clicked
+document.querySelector('.profile-pic').addEventListener('click', function() {
+    document.getElementById('edit-profile-overlay').style.display = 'flex';
+  });
+  
+  // Close overlay when close button is clicked
+  document.querySelector('.close-overlay').addEventListener('click', function() {
+    document.getElementById('edit-profile-overlay').style.display = 'none';
+  });
+  
+  // Handle form submission with AJAX
+  document.getElementById('edit-profile-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+  
+    let formData = new FormData(this);
+  
+    fetch('/updateProfile', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Update welcome message dynamically
+        document.getElementById('welcome-message').textContent = `Welcome, ${data.firstName}! Here you can manage your properties and add new listings.`;
+  
+        // Update profile picture dynamically
+        document.querySelector('.profile-pic').src = data.profilePicture;
+  
+        // Display success message inside overlay
+        const messageContainer = document.createElement('p');
+        messageContainer.textContent = data.message;
+        messageContainer.style.color = 'green';
+  
+        // Remove any existing messages
+        const previousMessage = document.querySelector('.overlay-content p.message');
+        if (previousMessage) previousMessage.remove();
+  
+        // Append success message
+        document.querySelector('.overlay-content').appendChild(messageContainer);
+  
+        // Close overlay after 2 seconds
+        setTimeout(() => {
+          document.getElementById('edit-profile-overlay').style.display = 'none';
+        }, 2000);
+      } else {
+        // Handle error case
+        alert('Failed to update profile.');
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  });
+  

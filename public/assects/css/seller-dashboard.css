@@ -173,3 +173,31 @@ body {
     background-color: #27ae60; /* Darker green on hover */
     transform: translateY(-3px); /* Subtle lift effect */
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .overlay-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  .close-overlay {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  

@@ -19,18 +19,19 @@ block content
 
   // Link Buyers to Properties
   div#link-buyers(style="display: none;")
-    h3 Link Buyers to Properties
-    if linkedBuyers.length > 0
-      form#link-buyers-form(action="/link-buyers", method="post")
-        select(name="buyerId")
-          each buyerId in linkedBuyers
-            option(value=buyerId) Buyer ID: #{buyerId}
-        select(name="propertyId")
-          each property in availableProperties
-            option(value=property.id) #{property.title} - #{property.location} - $#{property.price}
-        button(type="submit") Link Buyer
-    else
-      p No linked buyers.
+  h3 Link Buyers to Properties
+  if linkedBuyers && linkedBuyers.length > 0
+    form#link-buyers-form(action="/link-buyers", method="post")
+      select(name="buyerId")
+        each buyerId in linkedBuyers
+          option(value=buyerId) Buyer ID: #{buyerId}
+    select(name="propertyId")
+      each property in availableProperties
+        option(value=property.id) #{property.title} - #{property.location} - $#{property.price}
+    button(type="submit") Link Buyer
+  else
+    p No linked buyers.
+
 
   // View Available Properties for Sale
   div#available-properties(style="display: none;")
@@ -52,6 +53,7 @@ block content
     else
       p No active deals.
 
+  
   // JavaScript to switch between sections
   script.
     function showSection(section) {
@@ -61,3 +63,4 @@ block content
 
       document.getElementById(section).style.display = 'block';
     }
+
